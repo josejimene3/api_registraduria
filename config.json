@@ -1,0 +1,6 @@
+{
+  "url-backend":"127.0.0.1",
+  "port": 7777,
+  "data-db-connection":"mongodb+srv://jajimenez:jajimenez@cluster0.ufffl4d.mongodb.net/?retryWrites=true&w=majority",
+  "name-db":"db_project_votes"
+}
