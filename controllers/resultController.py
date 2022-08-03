@@ -76,3 +76,6 @@ class ResultController:
 
     def total_votes_party(self, id_table):
         return self.resultRepository.sum_votes_party(id_table)
+
+    def percentage_votes_parties(self):
+        return self.resultRepository.percentage_parties()

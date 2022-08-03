@@ -237,6 +237,12 @@ def get_result_total_votesxparty(id_table):
     return jsonify(response)
 
 
+@app.route("/result/percentage", methods=["GET"])
+def get_percentage_total_parties():
+    response = result_controller.percentage_votes_parties()
+    return jsonify(response)
+
+
 dataConfig = load_file_config()
 url = "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"])
 print("Server running ", url)

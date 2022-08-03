@@ -344,3 +344,84 @@ class ResultRepository(InterfaceRepository[Result]):
 
         pipeline = [query1, query2, query3, query4, query5, query6, query7]
         return self.queryAggregation(pipeline)
+
+    def percentage_parties(self):
+        query1 = {
+            "$group": {
+                "_id": "",
+                "count": {
+                    "$sum": "$votes"
+                },
+                "results": {
+                    "$push": "$$ROOT"
+                }
+            }
+        }
+
+        query2 = {
+            "$unwind": {
+                "path": "$results"
+            }
+        }
+
+        query3 = {
+            "$lookup": {
+                "from": "candidate",
+                "localField": "results.candidate.$id",
+                "foreignField": "_id",
+                "as": "candidate"
+            }
+        }
+
+        query4 = {
+            "$group": {
+                "_id": "$candidate.party",
+                "count": {
+                    "$sum": "$results.votes"
+                },
+                "total": {
+                    "$first": "$count"
+                },
+                "party": {
+                    "$first": "$candidate.party"
+                }
+            }
+        }
+
+        query5 = {
+            "$lookup": {
+                "from": "party",
+                "localField": "party.$id",
+                "foreignField": "_id",
+                "as": "party"
+            }
+        }
+
+        query6 = {
+            "$unwind": {
+                "path": "$party"
+            }
+        }
+
+        query7 = {
+            "$project": {
+                "_id": 0,
+                "_id": "$party._id",
+                "name": "$party.name",
+                "votes": "$count",
+                "percentage": {
+                    "$multiply": [{
+                        "$divide": [100, "$total"]
+                    }, "$count"]
+                }
+            }
+        }
+
+        query8 = {
+            "$sort": {
+                "percentage": -1
+            }
+        }
+
+        pipeline = [query1, query2, query3, query4, query5, query6, query7, query8]
+        return self.queryAggregation(pipeline)
