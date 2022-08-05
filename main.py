@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
 import json
 from waitress import serve
@@ -11,6 +12,20 @@ import certifi
 
 
 app = Flask(__name__)
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+
+# swagger configs
+swagger_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': 'API Registraduria'
+    }
+)
+
+app.register_blueprint(swagger_blueprint)
+# configs cors
 cors = CORS(app)
 party_controller = PartyController()
 candidate_controller = CandidateController()

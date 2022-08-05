@@ -1,0 +1,715 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Registro de votos",
+    "version": "1.0.0",
+    "title": "Progarma web de votaciones",
+    "license": {
+      "name": "MIT",
+      "url": ""
+    }
+  },
+  "servers": [{
+    "url": "http://localhost:7777",
+    "description": "Generated server url"
+  }],
+  "components": {
+    "schemas": {
+      "Candidate": {
+        "type": "object",
+        "properties": {
+          "accreditation": {
+            "type": "integer"
+          },
+          "document": {
+            "type": "integer"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "party": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "slogan": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "Party": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "slogan": {
+            "type": "string"
+          }
+        }
+      },
+      "Result": {
+        "type": "object",
+        "properties": {
+          "votes": {
+            "type": "integer"
+          },
+          "id_candidate": {
+            "type": "string"
+          },
+          "id_table": {
+            "type": "string"
+          }
+        }
+      },
+      "Table": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "string"
+          },
+          "register_count": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/candidates": {
+      "get": {
+        "tags": ["Candidate"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/Candidate"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "$ref": "#/components/schemas/Candidate"
+            }
+          }
+        }
+      }
+    },
+    "/candidate/{id}": {
+      "get": {
+        "tags": ["Candidate"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/Candidate"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "$ref": "#/components/schemas/Candidate"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Candidate"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {
+          "description": "Post new candidate to database",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Candidate"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/Candidate"
+              }
+            },
+            "400": {
+              "description": "NOT FOUND",
+              "schema": {
+                "$ref": "#/components/schemas/Candidate"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Candidate"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/candidate": {
+      "post": {
+        "tags": [
+          "Candidate"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Candidate"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/Candidate"
+              }
+            },
+            "400": {
+              "description": "NOT FOUND",
+              "schema": {
+                "$ref": "#/components/schemas/Candidate"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/parties": {
+      "get": {
+        "tags": ["Party"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/Party"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "$ref": "#/components/schemas/Party"
+            }
+          }
+        }
+      }
+    },
+    "/party/{id}": {
+      "get": {
+        "tags": ["Party"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/Candidate"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "$ref": "#/components/schemas/Candidate"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Party"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Candidate"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/Candidate"
+              }
+            },
+            "400": {
+              "description": "NOT FOUND",
+              "schema": {
+                "$ref": "#/components/schemas/Candidate"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Party"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/party": {
+      "post": {
+        "tags": [
+          "Party"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Party"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/Party"
+              }
+            },
+            "400": {
+              "description": "NOT FOUND",
+              "schema": {
+                "$ref": "#/components/schemas/Party"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/result": {
+      "get": {
+        "tags": ["Result"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/Result"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "$ref": "#/components/schemas/Result"
+            }
+          }
+        }
+      }
+    },
+    "/result/{id}": {
+      "get": {
+        "tags": ["Result"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/Result"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "$ref": "#/components/schemas/Result"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Result"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/result/table": {
+      "post": {
+        "tags": ["Result"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Result"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/Result"
+              }
+            },
+            "400": {
+              "description": "NOT FOUND",
+              "schema": {
+                "$ref": "#/components/schemas/Party"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/result/{id}/table/{id_table}/candidate/{id_candidate}" : {
+      "put": {
+        "tags": ["Result"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Result"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/Result"
+              }
+            },
+            "400": {
+              "description": "NOT FOUND",
+              "schema": {
+                "$ref": "#/components/schemas/Result"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/tables": {
+      "get": {
+        "tags": ["Table"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/Table"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "$ref": "#/components/schemas/Table"
+            }
+          }
+        }
+      }
+    },
+    "/table/{id}": {
+      "get": {
+        "tags": ["Table"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/Table"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "$ref": "#/components/schemas/Table"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Table"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Table"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/Table"
+              }
+            },
+            "400": {
+              "description": "NOT FOUND",
+              "schema": {
+                "$ref": "#/components/schemas/Table"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Table"],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/table": {
+      "post": {
+        "tags": ["Table"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Table"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/Table"
+              }
+            },
+            "400": {
+              "description": "NOT FOUND",
+              "schema": {
+                "$ref": "#/components/schemas/Table"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/result/votesxcandidates": {
+      "get": {
+        "tags": ["Report"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "type": "array"
+            }
+          }
+        }
+      }
+    },
+    "/result/votesxtables": {
+      "get": {
+        "tags": ["Report"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "type": "array"
+            }
+          }
+        }
+      }
+    },
+    "/result/votesxcandidates/table/{id_table}": {
+      "get": {
+        "tags": ["Report"],
+        "parameters": [{
+          "name": "id_table",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array"
+            }
+          },
+          "400": {
+            "description": "NOT FOUND",
+            "schema": {
+              "type": "array"
+            }
+          }
+        }
+      }
+    }
+  }
+}
